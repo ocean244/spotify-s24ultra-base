@@ -17,7 +17,7 @@ log_dl() {
 }
 
 if [ -z "${GH_TOKEN:-}" ]; then
-  log_dl "Brak GH_TOKEN — pominięto pobieranie APK z GitHub."
+  log_dl "Brak GH_TOKEN — pominięto pobieranie APK."
   exit 1
 fi
 
@@ -27,7 +27,7 @@ RELEASE_JSON="$(curl -fsSL \
   "https://api.github.com/repos/${GH_OWNER_CUR}/${GH_REPO_CUR}/releases/tags/s24ultra-latest" || true)"
 
 if [ -z "${RELEASE_JSON}" ]; then
-  log_dl "Release s24ultra-latest jeszcze nie opublikowany na GitHub (workflow w toku lub oczekuje na uruchomienie)."
+  log_dl "Release s24ultra-latest jeszcze nie opublikowany na GitHub."
   exit 0
 fi
 
@@ -56,8 +56,8 @@ for asset in data.get("assets", []):
     )
     with urllib.request.urlopen(req, timeout=120) as resp:
         (out_dir / name).write_bytes(resp.read())
-print(f"Pobrano pliki do: {out_dir}")
+print(f"Zapisano pliki APK w: {out_dir}")
 PYEOF
 
-log_dl "Zaktualizowano lokalny katalog APK w ${OUT_DIR}."
+log_dl "Pobrano pliki APK do ${OUT_DIR}."
 ls -lh "${OUT_DIR}" >> "${LOG_FILE}" 2>&1 || true

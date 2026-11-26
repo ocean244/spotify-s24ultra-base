@@ -25,7 +25,7 @@ android {
             if (!keystoreFile.isNullOrBlank()) {
                 storeFile = file(keystoreFile)
                 storePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD") ?: ""
-                keyAlias = System.getenv("ANDROID_KEY_ALIAS") ?: "s24ultra_key"
+                keyAlias = System.getenv("ANDROID_KEY_ALIAS") ?: "s24ultra_release_key"
                 keyPassword = System.getenv("ANDROID_KEY_PASSWORD") ?: ""
             }
         }

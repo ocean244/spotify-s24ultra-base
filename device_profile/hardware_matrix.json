@@ -11,7 +11,7 @@
   "artifact_integrity": {
     "algorithm": "SHA-256",
     "checksums_file": "device_profile/artifacts.sha256",
-    "updated_at_utc": "2026-11-26T05:56:49.901799+00:00",
+    "updated_at_utc": "2026-11-26T06:02:13.343564+00:00",
     "artifacts": [
       {
         "path": ".github/workflows/build_s24ultra_apk.yml",
@@ -35,8 +35,8 @@
       },
       {
         "path": "app/build.gradle.kts",
-        "sha256": "9cd61567c459e9d06ac64d0a268714e7199fa784d5008e8f5fac5c9e88cd0df2",
-        "size_bytes": 1885
+        "sha256": "16915111ca21d562bc841fba062d6222f9e4e74eb42a047d2108fcb08bd646e6",
+        "size_bytes": 1893
       },
       {
         "path": "app/proguard-rules.pro",
@@ -50,8 +50,8 @@
       },
       {
         "path": "app/src/main/java/com/s24ultra/spotifybase/AudioSessionMonitorService.kt",
-        "sha256": "0295eb8bdde5d9233e2dfb5118808f37cf8827d48a1184957e640d85332caa81",
-        "size_bytes": 1858
+        "sha256": "3dc1ba890e1e4408e787cfa5729038823fc8ece16944fd217234d66403eb45e3",
+        "size_bytes": 1706
       },
       {
         "path": "app/src/main/java/com/s24ultra/spotifybase/HardwareTelemetryRepository.kt",
@@ -105,8 +105,8 @@
       },
       {
         "path": "scripts/fetch_s24ultra_apk_to_device.sh",
-        "sha256": "bea5085688a67039bd0a8d779a7befcd52254a0d49279f215ab93bc0d6af331e",
-        "size_bytes": 1826
+        "sha256": "dd7dafa1fdc9ed3fa54583beeb97a6d2ceada1071ddbd8638ff5dec81f81b99a",
+        "size_bytes": 1758
       },
       {
         "path": "scripts/generate_sha256_manifest.sh",
