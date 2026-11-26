@@ -11,7 +11,7 @@
   "artifact_integrity": {
     "algorithm": "SHA-256",
     "checksums_file": "device_profile/artifacts.sha256",
-    "updated_at_utc": "2026-11-26T06:02:13.343564+00:00",
+    "updated_at_utc": "2026-11-26T06:03:11.474288+00:00",
     "artifacts": [
       {
         "path": ".github/workflows/build_s24ultra_apk.yml",
