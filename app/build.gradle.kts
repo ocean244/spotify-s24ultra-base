@@ -32,8 +32,8 @@ android {
         applicationId = "com.s24ultra.spotifybase"
         minSdk = 29
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0.0-s24ultra"
+        versionCode = 2
+        versionName = "1.1.0-s24ultra"
 
         ndk {
             abiFilters += listOf("arm64-v8a")
