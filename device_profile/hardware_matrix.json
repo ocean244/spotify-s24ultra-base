@@ -11,8 +11,18 @@
   "artifact_integrity": {
     "algorithm": "SHA-256",
     "checksums_file": "device_profile/artifacts.sha256",
-    "updated_at_utc": "2026-11-26T05:51:20.730848+00:00",
+    "updated_at_utc": "2026-11-26T05:54:44.021943+00:00",
     "artifacts": [
+      {
+        "path": ".github/workflows/build_s24ultra_apk.yml",
+        "sha256": "67c8c4de64096d035a81873d707df3caa173936c0d302f547fe09250f86f300f",
+        "size_bytes": 1955
+      },
+      {
+        "path": ".github/workflows/sha256_manifest_check.yml",
+        "sha256": "0a89828a7d710bb12c5e8b1bdd8f398f88e356712a124b51c06bb2d7504b5b8c",
+        "size_bytes": 667
+      },
       {
         "path": ".gitignore",
         "sha256": "2dadd044572be3de9cec7e26d01cba31ad060156e9aabc614048c7e8cd93c3fc",
@@ -22,6 +32,41 @@
         "path": "README.md",
         "sha256": "747011c5b34449fea68f3e8b9526c787c110039b4c72d88782a56c0dc639ebdc",
         "size_bytes": 80
+      },
+      {
+        "path": "app/build.gradle.kts",
+        "sha256": "f187b12929d7aa5cba2a85f30c5abac2bf3d8a174346f7ee730115a44757e442",
+        "size_bytes": 1219
+      },
+      {
+        "path": "app/proguard-rules.pro",
+        "sha256": "bf572aece295b359222205bbf08a6664cd068971dcdb3f2ce00e3321e1829f0f",
+        "size_bytes": 47
+      },
+      {
+        "path": "app/src/main/AndroidManifest.xml",
+        "sha256": "fe39f54c794e0f45981c88b3d83c2563a64b4227c5d166fe59bbb09e89914cd5",
+        "size_bytes": 792
+      },
+      {
+        "path": "app/src/main/java/com/s24ultra/spotifybase/MainActivity.kt",
+        "sha256": "c90abde2072886d08e9fde690722ca76db41e712d9d97eaea24ad735e66d2779",
+        "size_bytes": 779
+      },
+      {
+        "path": "app/src/main/res/values/strings.xml",
+        "sha256": "6d35b3cee41b8dbb753cbdd57750f5227ec45043c5d8ceeb271e75fa804ace97",
+        "size_bytes": 237
+      },
+      {
+        "path": "app/src/main/res/values/themes.xml",
+        "sha256": "9dd54f2e918ee59c36e07f68976620821b6382e4d468bbd2a872106741f0c70f",
+        "size_bytes": 157
+      },
+      {
+        "path": "build.gradle.kts",
+        "sha256": "7e8ae6b94050e509f2758a24594ed01c940d851835e61eb017bd642f65c333d5",
+        "size_bytes": 142
       },
       {
         "path": "device_profile/device_profile.properties",
@@ -34,10 +79,43 @@
         "size_bytes": 99
       },
       {
+        "path": "gradle.properties",
+        "sha256": "7e7bf3e2bf4f24f1d463f6c949eac4c8f297593a17978b909c5a6f138f6cc01a",
+        "size_bytes": 158
+      },
+      {
+        "path": "gradle/wrapper/gradle-wrapper.properties",
+        "sha256": "3d91f0932da99885c41e9dc4e85c9f9a2d3bfef4f0ad87473014dc0827a94884",
+        "size_bytes": 250
+      },
+      {
+        "path": "gradlew",
+        "sha256": "4af259193116fc425af66e09c82aa48af2ef589530ca4242aa66db3b23243aaa",
+        "size_bytes": 886
+      },
+      {
+        "path": "scripts/generate_sha256_manifest.sh",
+        "sha256": "df0a675e245153649fe8fa84123fffb969e114dad8e1f7a4316cac65dbbe413f",
+        "size_bytes": 3532
+      },
+      {
         "path": "scripts/s24ultra_module_runner.sh",
         "sha256": "bd73aafc632c1f9f295ea61e8674b2839ab059bae2202dbe5493bfab1b59415a",
         "size_bytes": 108
+      },
+      {
+        "path": "settings.gradle.kts",
+        "sha256": "760e5332d07629622d973968a1205d3ca4c079347b80f795c54f22a4115c0848",
+        "size_bytes": 341
       }
     ]
+  },
+  "target_profile": {
+    "model": "SM-S928B",
+    "codename": "e3q",
+    "abi": "arm64-v8a",
+    "android_version": 16,
+    "api_level": 36,
+    "application_id": "com.s24ultra.spotifybase"
   }
 }

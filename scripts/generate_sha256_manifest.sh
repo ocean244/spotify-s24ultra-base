@@ -1,4 +1,4 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 
 BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -35,6 +35,20 @@ manifest_path = pathlib.Path(sys.argv[3])
 sha_out_path = pathlib.Path(sys.argv[4])
 status_out_path = pathlib.Path(sys.argv[5])
 
+excluded_exact = {
+    "device_profile/artifacts.sha256",
+    "device_profile/hardware_matrix.json",
+    "device_profile/sha256_sync_status.json",
+    "deploy.log",
+}
+excluded_prefixes = (
+    ".git/",
+    ".gradle/",
+    "app/build/",
+    "build/",
+    "__pycache__/",
+)
+
 def sha256_file(path: pathlib.Path) -> str:
     h = hashlib.sha256()
     with path.open("rb") as fh:
@@ -42,23 +56,20 @@ def sha256_file(path: pathlib.Path) -> str:
             h.update(chunk)
     return h.hexdigest()
 
-candidate_files = []
-for rel_candidate in [
-    "README.md",
-    ".gitignore",
-    props_path.relative_to(base_dir).as_posix(),
-    "scripts/s24ultra_module_runner.sh",
-    "device_profile/module_readiness_report.json",
-    ".github/workflows/base_artifact_check.yml",
-    ".github/workflows/arm64_module_check.yml",
-]:
-    p = base_dir / rel_candidate
-    if p.is_file():
-        candidate_files.append(p)
+files_to_hash = []
+for fpath in base_dir.rglob("*"):
+    if not fpath.is_file():
+        continue
+    rel = fpath.relative_to(base_dir).as_posix()
+    if rel in excluded_exact:
+        continue
+    if any(rel.startswith(pfx) for pfx in excluded_prefixes):
+        continue
+    files_to_hash.append(fpath)
 
 records = []
 sha_lines = []
-for fpath in sorted(candidate_files, key=lambda p: p.relative_to(base_dir).as_posix()):
+for fpath in sorted(files_to_hash, key=lambda p: p.relative_to(base_dir).as_posix()):
     rel = fpath.relative_to(base_dir).as_posix()
     digest = sha256_file(fpath)
     size_bytes = fpath.stat().st_size
@@ -72,6 +83,14 @@ for fpath in sorted(candidate_files, key=lambda p: p.relative_to(base_dir).as_po
 sha_out_path.write_text("\n".join(sha_lines) + ("\n" if sha_lines else ""), encoding="utf-8")
 
 manifest_data = json.loads(manifest_path.read_text(encoding="utf-8"))
+manifest_data["target_profile"] = {
+    "model": "SM-S928B",
+    "codename": "e3q",
+    "abi": "arm64-v8a",
+    "android_version": 16,
+    "api_level": 36,
+    "application_id": "com.s24ultra.spotifybase",
+}
 manifest_data["artifact_integrity"] = {
     "algorithm": "SHA-256",
     "checksums_file": "device_profile/artifacts.sha256",

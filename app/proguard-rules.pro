@@ -1,0 +1,1 @@
+-keep class com.s24ultra.spotifybase.** { *; }
