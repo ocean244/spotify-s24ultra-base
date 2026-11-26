@@ -11,12 +11,12 @@
   "artifact_integrity": {
     "algorithm": "SHA-256",
     "checksums_file": "device_profile/artifacts.sha256",
-    "updated_at_utc": "2026-11-26T06:10:24.532118+00:00",
+    "updated_at_utc": "2026-11-26T06:13:33.994466+00:00",
     "artifacts": [
       {
         "path": ".github/workflows/build_s24ultra_apk.yml",
-        "sha256": "9100ed84d4910f3f060b82cd90e8750be605f6520dd70a9e588c154bd0c0c059",
-        "size_bytes": 3952
+        "sha256": "6e391e87a37a0ebd2ccdbcd7f7f67e9ae86fe65c902502ae4245e772ced46bd3",
+        "size_bytes": 4128
       },
       {
         "path": ".github/workflows/sha256_manifest_check.yml",
@@ -54,19 +54,24 @@
         "size_bytes": 1706
       },
       {
+        "path": "app/src/main/java/com/s24ultra/spotifybase/EnhancedAudioSessionRepository.kt",
+        "sha256": "1b1351bfbc044e261e15e53fa0c812a6f18e435b5ff8653543795e25e5191b3c",
+        "size_bytes": 3351
+      },
+      {
         "path": "app/src/main/java/com/s24ultra/spotifybase/HardwareTelemetryRepository.kt",
         "sha256": "b7bcf82cff2a8cea3464ea3112085e76a317f150373d40efff7a2a722964c201",
         "size_bytes": 3308
       },
       {
         "path": "app/src/main/java/com/s24ultra/spotifybase/MainActivity.kt",
-        "sha256": "029561aa3660b513dd557a7420f86de53fd1ec683c6e2a6e84ab3aa1225867fd",
-        "size_bytes": 1885
+        "sha256": "1ac592b602b99126dea3ffae1e4ec471d5e93f0fe6525915fac33ac9636135e9",
+        "size_bytes": 2388
       },
       {
         "path": "app/src/main/res/values/strings.xml",
-        "sha256": "6d35b3cee41b8dbb753cbdd57750f5227ec45043c5d8ceeb271e75fa804ace97",
-        "size_bytes": 237
+        "sha256": "4016614660cdc1c8ae8ae43f5b164e70d2f1165a35ee88a33ca18e5e37be1709",
+        "size_bytes": 124
       },
       {
         "path": "app/src/main/res/values/themes.xml",
@@ -90,8 +95,8 @@
       },
       {
         "path": "gradle.properties",
-        "sha256": "7e7bf3e2bf4f24f1d463f6c949eac4c8f297593a17978b909c5a6f138f6cc01a",
-        "size_bytes": 158
+        "sha256": "e6b436ff6a08da8b8c05e0e2fc1a7f40f41701bb506cd80fc2ddfd7b6e3b3b2b",
+        "size_bytes": 109
       },
       {
         "path": "gradle/wrapper/gradle-wrapper.properties",
@@ -120,8 +125,8 @@
       },
       {
         "path": "settings.gradle.kts",
-        "sha256": "760e5332d07629622d973968a1205d3ca4c079347b80f795c54f22a4115c0848",
-        "size_bytes": 341
+        "sha256": "bcf974b3d74c3fe70d67f18756f2f2949f8dbe8d38ae11209b18c805258b9c7c",
+        "size_bytes": 339
       }
     ]
   },

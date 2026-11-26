@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "spotify-s24ultra-base"
+rootProject.name = "SpotifyS24UltraBase"
 include(":app")

@@ -38,10 +38,17 @@ jobs:
           api-level: 36
           build-tools: "35.0.0"
 
-      - name: Accept Android SDK licenses and install platforms/build-tools
+      - name: Install Android SDK platform 36 and build-tools 35.0.0
         run: |
           yes | "${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null 2>&1 || true
           "${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager" "platforms;android-36" "build-tools;35.0.0"
+
+      - name: Ensure Gradle Wrapper is present
+        run: |
+          if [ ! -f ./gradlew ]; then
+            gradle wrapper --gradle-version 8.11.1 --distribution-type all
+          fi
+          chmod +x ./gradlew
 
       - name: Prepare Release Keystore for APK signing
         env:
@@ -66,7 +73,6 @@ jobs:
 
       - name: Build Debug and Signed Release APK
         run: |
-          chmod +x ./gradlew
           ./gradlew --no-daemon assembleDebug assembleRelease
 
       - name: Verify APK signature and collect artifacts
@@ -79,7 +85,7 @@ jobs:
               "${BUILD_TOOLS_DIR}/apksigner" verify --print-certs "${apk}" || true
             fi
           done
-          sha256sum artifacts_out/*.apk > artifacts_out/apk_checksums.sha256
+          (cd artifacts_out && sha256sum *.apk > apk_checksums.sha256)
           ls -lh artifacts_out/
           cat artifacts_out/apk_checksums.sha256
 
