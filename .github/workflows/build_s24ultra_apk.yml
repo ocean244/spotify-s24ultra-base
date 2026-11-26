@@ -43,6 +43,11 @@ jobs:
           yes | "${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null 2>&1 || true
           "${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager" "platforms;android-36" "build-tools;35.0.0"
 
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.11.1"
+
       - name: Ensure Gradle Wrapper is present
         run: |
           if [ ! -f ./gradlew ]; then
@@ -99,9 +104,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release delete "s24ultra-latest" --yes >/dev/null 2>&1 || true
-          git tag -d "s24ultra-latest" >/dev/null 2>&1 || true
-          git push origin :refs/tags/s24ultra-latest >/dev/null 2>&1 || true
+          gh release delete "s24ultra-latest" --yes || true
+          git tag -d "s24ultra-latest" || true
+          git push origin :refs/tags/s24ultra-latest || true
           gh release create "s24ultra-latest" artifacts_out/*.apk artifacts_out/apk_checksums.sha256 \
             --title "Spotify S24 Ultra Base APK (arm64-v8a, API 36)" \
             --notes "Automated signed Debug and Release APKs for SM-S928B (e3q) with SHA-256 verification."
