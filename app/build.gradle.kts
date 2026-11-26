@@ -5,24 +5,24 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
-val storeFileProp = (project.findProperty("android.injected.signing.store.file") as? String)
-    ?: System.getenv("ANDROID_KEYSTORE_PATH")
+val ksFile = (project.findProperty("RELEASE_STORE_FILE") as? String)
+    ?: System.getenv("RELEASE_STORE_FILE")
     ?: ""
-val storePassProp = (project.findProperty("android.injected.signing.store.password") as? String)
-    ?: System.getenv("ANDROID_KEYSTORE_PASSWORD")
+val ksStorePass = (project.findProperty("RELEASE_STORE_PASSWORD") as? String)
+    ?: System.getenv("RELEASE_STORE_PASSWORD")
     ?: ""
-val keyAliasProp = (project.findProperty("android.injected.signing.key.alias") as? String)
-    ?: System.getenv("ANDROID_KEY_ALIAS")
+val ksAlias = (project.findProperty("RELEASE_KEY_ALIAS") as? String)
+    ?: System.getenv("RELEASE_KEY_ALIAS")
     ?: ""
-val keyPassProp = (project.findProperty("android.injected.signing.key.password") as? String)
-    ?: System.getenv("ANDROID_KEY_PASSWORD")
+val ksKeyPass = (project.findProperty("RELEASE_KEY_PASSWORD") as? String)
+    ?: System.getenv("RELEASE_KEY_PASSWORD")
     ?: ""
 
-val hasReleaseSigning = storeFileProp.isNotBlank() &&
-    File(storeFileProp).exists() &&
-    storePassProp.isNotBlank() &&
-    keyAliasProp.isNotBlank() &&
-    keyPassProp.isNotBlank()
+val hasReleaseKeystore = ksFile.isNotBlank() &&
+    File(ksFile).exists() &&
+    ksStorePass.isNotBlank() &&
+    ksAlias.isNotBlank() &&
+    ksKeyPass.isNotBlank()
 
 android {
     namespace = "com.s24ultra.spotifybase"
@@ -41,12 +41,14 @@ android {
     }
 
     signingConfigs {
-        create("release") {
-            if (hasReleaseSigning) {
-                storeFile = File(storeFileProp)
-                storePassword = storePassProp
-                keyAlias = keyAliasProp
-                keyPassword = keyPassProp
+        if (hasReleaseKeystore) {
+            create("release") {
+                storeFile = File(ksFile)
+                storePassword = ksStorePass
+                keyAlias = ksAlias
+                keyPassword = ksKeyPass
+                enableV1Signing = true
+                enableV2Signing = true
             }
         }
     }
@@ -58,7 +60,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            if (hasReleaseSigning) {
+            if (hasReleaseKeystore) {
                 signingConfig = signingConfigs.getByName("release")
             }
         }

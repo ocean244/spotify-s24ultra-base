@@ -56,33 +56,35 @@ jobs:
         run: |
           rm -rf /tmp/signing
           mkdir -p /tmp/signing
-          STORE_PASS="S24UltraKey2026"
-          KEY_PASS="S24UltraKey2026"
-          KEY_ALIAS="s24ultra_release_key"
-          KS_PATH="/tmp/signing/s24ultra-release.jks"
+          RELEASE_STORE_FILE="/tmp/signing/s24ultra-release.p12"
+          RELEASE_STORE_PASSWORD="S24UltraReleasePass2026"
+          RELEASE_KEY_ALIAS="s24ultra_key"
+          RELEASE_KEY_PASSWORD="S24UltraReleasePass2026"
           keytool -genkeypair -v \
-            -keystore "${KS_PATH}" \
+            -keystore "${RELEASE_STORE_FILE}" \
             -storetype PKCS12 \
-            -storepass "${STORE_PASS}" \
-            -alias "${KEY_ALIAS}" \
-            -keypass "${KEY_PASS}" \
+            -storepass "${RELEASE_STORE_PASSWORD}" \
+            -alias "${RELEASE_KEY_ALIAS}" \
+            -keypass "${RELEASE_KEY_PASSWORD}" \
             -keyalg RSA \
             -keysize 4096 \
             -validity 10000 \
             -dname "CN=SpotifyS24UltraBase, OU=Engineering, O=SM-S928B, L=Darlowo, ST=Zachodniopomorskie, C=PL"
-          keytool -list -v -keystore "${KS_PATH}" -storepass "${STORE_PASS}" >/dev/null
-          echo "KS_PATH=${KS_PATH}" >> "${GITHUB_ENV}"
-          echo "STORE_PASS=${STORE_PASS}" >> "${GITHUB_ENV}"
-          echo "KEY_ALIAS=${KEY_ALIAS}" >> "${GITHUB_ENV}"
-          echo "KEY_PASS=${KEY_PASS}" >> "${GITHUB_ENV}"
+          keytool -list -keystore "${RELEASE_STORE_FILE}" -storepass "${RELEASE_STORE_PASSWORD}" -alias "${RELEASE_KEY_ALIAS}" >/dev/null
+          {
+            echo "RELEASE_STORE_FILE=${RELEASE_STORE_FILE}"
+            echo "RELEASE_STORE_PASSWORD=${RELEASE_STORE_PASSWORD}"
+            echo "RELEASE_KEY_ALIAS=${RELEASE_KEY_ALIAS}"
+            echo "RELEASE_KEY_PASSWORD=${RELEASE_KEY_PASSWORD}"
+          } >> "${GITHUB_ENV}"
 
       - name: Build Debug and Signed Release APK
         run: |
           ./gradlew --no-daemon assembleDebug assembleRelease \
-            -Pandroid.injected.signing.store.file="${KS_PATH}" \
-            -Pandroid.injected.signing.store.password="${STORE_PASS}" \
-            -Pandroid.injected.signing.key.alias="${KEY_ALIAS}" \
-            -Pandroid.injected.signing.key.password="${KEY_PASS}"
+            -PRELEASE_STORE_FILE="${RELEASE_STORE_FILE}" \
+            -PRELEASE_STORE_PASSWORD="${RELEASE_STORE_PASSWORD}" \
+            -PRELEASE_KEY_ALIAS="${RELEASE_KEY_ALIAS}" \
+            -PRELEASE_KEY_PASSWORD="${RELEASE_KEY_PASSWORD}"
 
       - name: Verify APK signature and collect artifacts
         run: |

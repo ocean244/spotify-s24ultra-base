@@ -1,4 +1,4 @@
-b1b161d3a6c7f6c166c34f91923c8c3c4d390d60901fff80461b4e11c7574f8d  app/build.gradle.kts
+c4a952534d2bcc7c4ce12438590d2d9f70e57f48fbaea95d6346be5862329b17  app/build.gradle.kts
 ffcbbb0050f93fc756c4edce640e8b813ff985e020ca87bed9919cee98ea3a76  app/proguard-rules.pro
 48d23a1ff9c6cff4077a570301811e435937a4f9603199208c28ef433dc11c99  app/src/main/AndroidManifest.xml
 3dc1ba890e1e4408e787cfa5729038823fc8ece16944fd217234d66403eb45e3  app/src/main/java/com/s24ultra/spotifybase/AudioSessionMonitorService.kt
