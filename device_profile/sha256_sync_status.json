@@ -1,8 +1,4 @@
 {
-  "updated_at_utc": "2026-11-26T06:31:17.685259+00:00",
-  "manifest_path": "device_profile/hardware_matrix.json",
-  "manifest_sha256": "2b0603e4a3fa85b4dfc3e35cbd8b7243309721088a5c18490f53c2c16fb4efff",
-  "checksums_file": "device_profile/artifacts.sha256",
-  "verified_artifacts_count": 23,
-  "status": "OK"
+  "status": "synced",
+  "updated_utc": "2026-11-26T06:47:01.030226+00:00"
 }

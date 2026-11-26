@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Spotify S24 Ultra Base</string>
+    <string name="status_ready">SM-S928B (arm64-v8a, API 36) — Gotowe</string>
 </resources>

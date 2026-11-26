@@ -1,7 +1,12 @@
+import java.io.File
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
+
+val keystorePath = System.getenv("ANDROID_KEYSTORE_PATH") ?: ""
+val hasKeystore = keystorePath.isNotBlank() && File(keystorePath).exists()
 
 android {
     namespace = "com.s24ultra.spotifybase"
@@ -11,8 +16,8 @@ android {
         applicationId = "com.s24ultra.spotifybase"
         minSdk = 29
         targetSdk = 36
-        versionCode = 101
-        versionName = "1.1.0-s24ultra-e3q"
+        versionCode = 1
+        versionName = "1.0.0-s24ultra"
 
         ndk {
             abiFilters += listOf("arm64-v8a")
@@ -20,12 +25,11 @@ android {
     }
 
     signingConfigs {
-        create("release") {
-            val keystoreFile = System.getenv("ANDROID_KEYSTORE_PATH")
-            if (!keystoreFile.isNullOrBlank()) {
-                storeFile = file(keystoreFile)
+        if (hasKeystore) {
+            create("release") {
+                storeFile = File(keystorePath)
                 storePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD") ?: ""
-                keyAlias = System.getenv("ANDROID_KEY_ALIAS") ?: "s24ultra_release_key"
+                keyAlias = System.getenv("ANDROID_KEY_ALIAS") ?: ""
                 keyPassword = System.getenv("ANDROID_KEY_PASSWORD") ?: ""
             }
         }
@@ -38,13 +42,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            val releaseConfig = signingConfigs.findByName("release")
-            if (releaseConfig?.storeFile != null) {
-                signingConfig = releaseConfig
+            if (hasKeystore) {
+                signingConfig = signingConfigs.getByName("release")
             }
         }
         debug {
-            isDebuggable = true
+            isMinifyEnabled = false
         }
     }
 
@@ -56,15 +59,10 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-
-    buildFeatures {
-        viewBinding = true
-    }
 }
 
 dependencies {
     implementation("androidx.core:core-ktx:1.15.0")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.2.0")
 }
