@@ -1,8 +1,8 @@
 {
-  "updated_at_utc": "2026-11-26T05:54:44.022282+00:00",
+  "updated_at_utc": "2026-11-26T05:56:49.902242+00:00",
   "manifest_path": "device_profile/hardware_matrix.json",
-  "manifest_sha256": "1bdadee147198601291516adff0ef1df8f0308d58aed0420c0e04f0ad773e107",
+  "manifest_sha256": "b6a78a555e7846eb63f2958b143b6295bf991cc7f6fb1594c97f59c36a369dbc",
   "checksums_file": "device_profile/artifacts.sha256",
-  "verified_artifacts_count": 19,
+  "verified_artifacts_count": 22,
   "status": "OK"
 }

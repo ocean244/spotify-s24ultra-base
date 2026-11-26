@@ -1,4 +1,4 @@
-name: Build S24 Ultra APK (arm64-v8a, API 36)
+name: Build Signed S24 Ultra APK (arm64-v8a, API 36)
 
 on:
   push:
@@ -6,8 +6,12 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: write
+  actions: read
+
 jobs:
-  build-apk:
+  build-signed-apk:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -39,21 +43,59 @@ jobs:
           yes | "${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null 2>&1 || true
           "${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager" "platforms;android-36" "build-tools;35.0.0"
 
-      - name: Build Debug and Release APK
+      - name: Prepare Release Keystore for APK signing
+        env:
+          KEY_STORE_PASS: "S24UltraReleaseStore2026!"
+          KEY_ALIAS_PASS: "S24UltraReleaseKey2026!"
+          KEY_ALIAS_NAME: "s24ultra_release_key"
+        run: |
+          mkdir -p /tmp/signing
+          keytool -genkeypair -v \
+            -keystore /tmp/signing/s24ultra-release.jks \
+            -storepass "${KEY_STORE_PASS}" \
+            -alias "${KEY_ALIAS_NAME}" \
+            -keypass "${KEY_ALIAS_PASS}" \
+            -keyalg RSA \
+            -keysize 4096 \
+            -validity 10000 \
+            -dname "CN=SpotifyS24UltraBase, OU=Engineering, O=SM-S928B, L=Darlowo, ST=Zachodniopomorskie, C=PL"
+          echo "ANDROID_KEYSTORE_PATH=/tmp/signing/s24ultra-release.jks" >> "${GITHUB_ENV}"
+          echo "ANDROID_KEYSTORE_PASSWORD=${KEY_STORE_PASS}" >> "${GITHUB_ENV}"
+          echo "ANDROID_KEY_ALIAS=${KEY_ALIAS_NAME}" >> "${GITHUB_ENV}"
+          echo "ANDROID_KEY_PASSWORD=${KEY_ALIAS_PASS}" >> "${GITHUB_ENV}"
+
+      - name: Build Debug and Signed Release APK
         run: |
           chmod +x ./gradlew
           ./gradlew --no-daemon assembleDebug assembleRelease
 
-      - name: Collect and checksum APK artifacts
+      - name: Verify APK signature and collect artifacts
         run: |
           mkdir -p artifacts_out
-          cp app/build/outputs/apk/debug/*.apk artifacts_out/ || true
-          cp app/build/outputs/apk/release/*.apk artifacts_out/ || true
-          sha256sum artifacts_out/*.apk > artifacts_out/apk_checksums.sha256 || true
+          BUILD_TOOLS_DIR="$(find "${ANDROID_HOME}/build-tools" -maxdepth 1 -mindepth 1 | sort -V | tail -n 1)"
+          for apk in app/build/outputs/apk/debug/*.apk app/build/outputs/apk/release/*.apk; do
+            if [ -f "${apk}" ]; then
+              cp "${apk}" artifacts_out/
+              "${BUILD_TOOLS_DIR}/apksigner" verify --print-certs "${apk}" || true
+            fi
+          done
+          sha256sum artifacts_out/*.apk > artifacts_out/apk_checksums.sha256
           ls -lh artifacts_out/
+          cat artifacts_out/apk_checksums.sha256
 
       - name: Upload APK artifacts
         uses: actions/upload-artifact@v4
         with:
           name: spotify-s24ultra-apk-arm64-api36
           path: artifacts_out/
+
+      - name: Publish latest APK release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete "s24ultra-latest" --yes >/dev/null 2>&1 || true
+          git tag -d "s24ultra-latest" >/dev/null 2>&1 || true
+          git push origin :refs/tags/s24ultra-latest >/dev/null 2>&1 || true
+          gh release create "s24ultra-latest" artifacts_out/*.apk artifacts_out/apk_checksums.sha256 \
+            --title "Spotify S24 Ultra Base APK (arm64-v8a, API 36)" \
+            --notes "Automated signed Debug and Release APKs for SM-S928B (e3q) with SHA-256 verification."

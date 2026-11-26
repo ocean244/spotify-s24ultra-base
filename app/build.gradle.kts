@@ -11,11 +11,23 @@ android {
         applicationId = "com.s24ultra.spotifybase"
         minSdk = 29
         targetSdk = 36
-        versionCode = 100
-        versionName = "1.0.0-s24ultra"
+        versionCode = 101
+        versionName = "1.1.0-s24ultra-e3q"
 
         ndk {
             abiFilters += listOf("arm64-v8a")
+        }
+    }
+
+    signingConfigs {
+        create("release") {
+            val keystoreFile = System.getenv("ANDROID_KEYSTORE_PATH")
+            if (!keystoreFile.isNullOrBlank()) {
+                storeFile = file(keystoreFile)
+                storePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD") ?: ""
+                keyAlias = System.getenv("ANDROID_KEY_ALIAS") ?: "s24ultra_key"
+                keyPassword = System.getenv("ANDROID_KEY_PASSWORD") ?: ""
+            }
         }
     }
 
@@ -26,6 +38,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            val releaseConfig = signingConfigs.findByName("release")
+            if (releaseConfig?.storeFile != null) {
+                signingConfig = releaseConfig
+            }
         }
         debug {
             isDebuggable = true

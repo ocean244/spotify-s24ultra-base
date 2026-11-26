@@ -11,12 +11,12 @@
   "artifact_integrity": {
     "algorithm": "SHA-256",
     "checksums_file": "device_profile/artifacts.sha256",
-    "updated_at_utc": "2026-11-26T05:54:44.021943+00:00",
+    "updated_at_utc": "2026-11-26T05:56:49.901799+00:00",
     "artifacts": [
       {
         "path": ".github/workflows/build_s24ultra_apk.yml",
-        "sha256": "67c8c4de64096d035a81873d707df3caa173936c0d302f547fe09250f86f300f",
-        "size_bytes": 1955
+        "sha256": "9100ed84d4910f3f060b82cd90e8750be605f6520dd70a9e588c154bd0c0c059",
+        "size_bytes": 3952
       },
       {
         "path": ".github/workflows/sha256_manifest_check.yml",
@@ -35,8 +35,8 @@
       },
       {
         "path": "app/build.gradle.kts",
-        "sha256": "f187b12929d7aa5cba2a85f30c5abac2bf3d8a174346f7ee730115a44757e442",
-        "size_bytes": 1219
+        "sha256": "9cd61567c459e9d06ac64d0a268714e7199fa784d5008e8f5fac5c9e88cd0df2",
+        "size_bytes": 1885
       },
       {
         "path": "app/proguard-rules.pro",
@@ -45,13 +45,23 @@
       },
       {
         "path": "app/src/main/AndroidManifest.xml",
-        "sha256": "fe39f54c794e0f45981c88b3d83c2563a64b4227c5d166fe59bbb09e89914cd5",
-        "size_bytes": 792
+        "sha256": "af37facf3917ce4099dd47159d7c61aa8128ff8efb45f09a531a22c50fb65c55",
+        "size_bytes": 1315
+      },
+      {
+        "path": "app/src/main/java/com/s24ultra/spotifybase/AudioSessionMonitorService.kt",
+        "sha256": "0295eb8bdde5d9233e2dfb5118808f37cf8827d48a1184957e640d85332caa81",
+        "size_bytes": 1858
+      },
+      {
+        "path": "app/src/main/java/com/s24ultra/spotifybase/HardwareTelemetryRepository.kt",
+        "sha256": "b7bcf82cff2a8cea3464ea3112085e76a317f150373d40efff7a2a722964c201",
+        "size_bytes": 3308
       },
       {
         "path": "app/src/main/java/com/s24ultra/spotifybase/MainActivity.kt",
-        "sha256": "c90abde2072886d08e9fde690722ca76db41e712d9d97eaea24ad735e66d2779",
-        "size_bytes": 779
+        "sha256": "029561aa3660b513dd557a7420f86de53fd1ec683c6e2a6e84ab3aa1225867fd",
+        "size_bytes": 1885
       },
       {
         "path": "app/src/main/res/values/strings.xml",
@@ -92,6 +102,11 @@
         "path": "gradlew",
         "sha256": "4af259193116fc425af66e09c82aa48af2ef589530ca4242aa66db3b23243aaa",
         "size_bytes": 886
+      },
+      {
+        "path": "scripts/fetch_s24ultra_apk_to_device.sh",
+        "sha256": "bea5085688a67039bd0a8d779a7befcd52254a0d49279f215ab93bc0d6af331e",
+        "size_bytes": 1826
       },
       {
         "path": "scripts/generate_sha256_manifest.sh",
