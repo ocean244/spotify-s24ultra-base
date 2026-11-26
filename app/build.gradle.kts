@@ -5,8 +5,24 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
-val keystorePath = System.getenv("ANDROID_KEYSTORE_PATH") ?: ""
-val hasKeystore = keystorePath.isNotBlank() && File(keystorePath).exists()
+val storeFileProp = (project.findProperty("android.injected.signing.store.file") as? String)
+    ?: System.getenv("ANDROID_KEYSTORE_PATH")
+    ?: ""
+val storePassProp = (project.findProperty("android.injected.signing.store.password") as? String)
+    ?: System.getenv("ANDROID_KEYSTORE_PASSWORD")
+    ?: ""
+val keyAliasProp = (project.findProperty("android.injected.signing.key.alias") as? String)
+    ?: System.getenv("ANDROID_KEY_ALIAS")
+    ?: ""
+val keyPassProp = (project.findProperty("android.injected.signing.key.password") as? String)
+    ?: System.getenv("ANDROID_KEY_PASSWORD")
+    ?: ""
+
+val hasReleaseSigning = storeFileProp.isNotBlank() &&
+    File(storeFileProp).exists() &&
+    storePassProp.isNotBlank() &&
+    keyAliasProp.isNotBlank() &&
+    keyPassProp.isNotBlank()
 
 android {
     namespace = "com.s24ultra.spotifybase"
@@ -25,12 +41,12 @@ android {
     }
 
     signingConfigs {
-        if (hasKeystore) {
-            create("release") {
-                storeFile = File(keystorePath)
-                storePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD") ?: ""
-                keyAlias = System.getenv("ANDROID_KEY_ALIAS") ?: ""
-                keyPassword = System.getenv("ANDROID_KEY_PASSWORD") ?: ""
+        create("release") {
+            if (hasReleaseSigning) {
+                storeFile = File(storeFileProp)
+                storePassword = storePassProp
+                keyAlias = keyAliasProp
+                keyPassword = keyPassProp
             }
         }
     }
@@ -42,7 +58,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            if (hasKeystore) {
+            if (hasReleaseSigning) {
                 signingConfig = signingConfigs.getByName("release")
             }
         }
