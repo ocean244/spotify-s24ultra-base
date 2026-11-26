@@ -1,0 +1,6 @@
+{
+  "module": "spotify-s24ultra-base",
+  "arch": "arm64-v8a",
+  "api_level": 36,
+  "ready": true
+}

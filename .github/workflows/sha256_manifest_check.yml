@@ -1,0 +1,23 @@
+name: SHA-256 Manifest Integrity Check
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  verify-sha256:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate and verify SHA-256 checksums
+        run: |
+          chmod +x scripts/generate_sha256_manifest.sh
+          ./scripts/generate_sha256_manifest.sh
+          test -f device_profile/artifacts.sha256
+          test -f device_profile/sha256_sync_status.json
+          python3 -m json.tool device_profile/hardware_matrix.json >/dev/null
+          python3 -m json.tool device_profile/sha256_sync_status.json >/dev/null

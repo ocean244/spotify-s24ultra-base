@@ -1,0 +1,3 @@
+deploy.log
+*.tmp
+__pycache__/
